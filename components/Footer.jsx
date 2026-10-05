@@ -12,11 +12,11 @@ export default function Footer({ links }) {
         </div>
         <div className="md:col-span-3">
           <p className="eyebrow text-sienna-light mb-4">Explore</p>
-          <ul className="space-y-2.5">{links.map((n) => <li key={n.href}><Link href={n.href} className="text-bone/80 hover:text-bone link-underline">{n.label}</Link></li>)}</ul>
+          <ul className="space-y-0">{links.map((n) => <li key={n.href}><Link href={n.href} className="inline-block py-2.5 text-bone/80 hover:text-bone link-underline">{n.label}</Link></li>)}</ul>
         </div>
         <div className="md:col-span-4">
           <p className="eyebrow text-sienna-light mb-4">Talk to us</p>
-          <ul className="space-y-2.5 text-bone/80">
+          <ul className="space-y-0 text-bone/80 [&_a]:inline-block [&_a]:py-2.5 [&_li]:py-0.5">
             <li><a href={waLink('Hello Nosea Safaris')} className="hover:text-bone">WhatsApp {SITE.phone}</a></li>
             <li><a href={`tel:${SITE.phone.replace(/\s/g, '')}`} className="hover:text-bone">{SITE.phone}</a></li>
             <li><a href={`mailto:${SITE.email}`} className="hover:text-bone">{SITE.email}</a></li>

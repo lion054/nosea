@@ -39,14 +39,25 @@ function HandoffForm({ subject, transcript, onDone }) {
 
 export default function Concierge() {
   const pathname = usePathname();
-  const lift = pathname === '/plan' ? 'bottom-24' : 'bottom-5';
+  const sticky = pathname === '/plan' || /^\/(experiences|journeys)\/[^/]+$/.test(pathname || '');
+  const lift = sticky ? 'bottom-24 lg:bottom-5' : 'bottom-5';
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState([WELCOME]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [ready, setReady] = useState(false);
+  const [overBooking, setOverBooking] = useState(false);
   const end = useRef(null); const box = useRef(null);
 
+  // Keep the chat button off the booking panel while it is on screen, so it never covers a control.
+  useEffect(() => {
+    setOverBooking(false);
+    const el = document.getElementById('book');
+    if (!el || window.innerWidth >= 1024 || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(([e]) => setOverBooking(e.isIntersecting), { threshold: 0.05 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [pathname]);
   useEffect(() => { try { const r = JSON.parse(sessionStorage.getItem(KEY) || 'null'); if (Array.isArray(r) && r.length) setMsgs(r); } catch {} setReady(true); }, []);
   useEffect(() => { if (ready) try { sessionStorage.setItem(KEY, JSON.stringify(msgs.slice(-30))); } catch {} }, [msgs, ready]);
   useEffect(() => { end.current?.scrollIntoView({ block: 'end' }); }, [msgs, open]);
@@ -83,13 +94,13 @@ export default function Concierge() {
 
   return (
     <>
-      {!open && (
+      {!open && !overBooking && (
         <div className={`fixed ${lift} right-4 z-40 pb-[env(safe-area-inset-bottom)]`}>
-          <button onClick={() => setOpen(true)} className="bg-sunset text-bone pl-4 pr-5 h-14 rounded-full shadow-xl flex items-center gap-2 hover:scale-105 transition" aria-label="Open the Nosea concierge"><MessageCircle size={20} /> <span className="eyebrow">Plan with us</span></button>
+          <button onClick={() => setOpen(true)} className="bg-sunset text-bone w-14 h-14 sm:w-auto sm:pl-4 sm:pr-5 rounded-full shadow-xl flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition" aria-label="Open the Nosea concierge"><MessageCircle size={22} /> <span className="eyebrow hidden sm:inline">Plan with us</span></button>
         </div>
       )}
       {open && (
-        <div role="dialog" aria-label="Nosea concierge" className="fixed z-50 inset-0 md:inset-auto md:bottom-5 md:right-5 md:w-[400px] md:h-[620px] md:max-h-[calc(100vh-2.5rem)] bg-bone border border-ink/15 shadow-2xl flex flex-col">
+        <div role="dialog" aria-label="Nosea concierge" className="fixed z-50 inset-0 h-dvh md:h-[620px] md:inset-auto md:bottom-5 md:right-5 md:w-[400px] md:max-h-[calc(100dvh-2.5rem)] bg-bone border border-ink/15 shadow-2xl flex flex-col" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
           <header className="bg-ink text-bone px-4 py-3 flex items-center justify-between shrink-0">
             <div><p className="display text-xl tracking-tightest leading-none">Nosea concierge</p><p className="eyebrow text-bone/60 mt-1">Real trips · real prices</p></div>
             <div className="flex items-center gap-1">
@@ -106,14 +117,14 @@ export default function Concierge() {
                     {m.content ? <div className="text-sm leading-relaxed text-ink" dangerouslySetInnerHTML={{ __html: safeHtml(m.content) }} /> : <span className="inline-flex gap-1 py-2" aria-label="Typing">{[0, 1, 2].map((d) => <i key={d} className="w-1.5 h-1.5 rounded-full bg-stone-400 animate-bounce" style={{ animationDelay: `${d * 120}ms` }} />)}</span>}
                     {m.pageLinks?.length > 0 && <div className="flex flex-col gap-2 mt-3">{m.pageLinks.map((l) => <Link key={l.url + l.label} href={l.url} onClick={() => setOpen(false)} className="flex items-center justify-between gap-3 border border-ink/20 px-3 py-2.5 text-sm hover:bg-ink hover:text-bone transition"><span>{l.label.replace(/\s*→\s*$/, '')}</span><ArrowUpRight size={14} /></Link>)}</div>}
                     {m.needsHuman && i === msgs.length - 1 && <HandoffForm subject={m.humanSubject} transcript={transcript} />}
-                    {m.followUps?.length > 0 && i === msgs.length - 1 && !busy && <div className="flex flex-wrap gap-2 mt-3">{m.followUps.map((f) => <button key={f} onClick={() => send(f)} className="text-xs border border-ink/20 px-3 py-1.5 hover:border-sienna hover:text-sienna-dark transition">{f}</button>)}</div>}
+                    {m.followUps?.length > 0 && i === msgs.length - 1 && !busy && <div className="flex flex-wrap gap-2 mt-3">{m.followUps.map((f) => <button key={f} onClick={() => send(f)} className="text-xs border border-ink/20 px-3 py-1.5 hover:border-sienna hover:text-accent-strong transition">{f}</button>)}</div>}
                   </div>
                 )}
               </div>
             ))}
             <div ref={end} />
           </div>
-          <form onSubmit={(e) => { e.preventDefault(); send(); }} className="border-t border-ink/10 p-3 flex gap-2 shrink-0">
+          <form onSubmit={(e) => { e.preventDefault(); send(); }} className="border-t border-ink/10 p-3 flex gap-2 shrink-0" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
             <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask about a trip…" maxLength={500} className="flex-1 bg-transparent border border-ink/20 px-3 py-2.5 text-sm focus:outline-none focus:border-ink" aria-label="Your message" />
             <button disabled={busy || !input.trim()} className="bg-ink text-bone w-11 flex items-center justify-center hover:bg-sienna transition disabled:opacity-40" aria-label="Send"><Send size={16} /></button>
           </form>

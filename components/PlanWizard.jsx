@@ -24,7 +24,7 @@ function SendPlan({ data, answers }) {
     const r = await fetch('/api/enquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: f.name, email: f.email, phone: f.phone, guests: String(answers.travellers), when: answers.month ? MONTHS[answers.month - 1] : '', message: brief, interest: 'Trip planner' }) }).catch(() => null);
     setS(r?.ok ? { busy: false, sent: true, error: '' } : { busy: false, sent: false, error: 'Could not send. Please WhatsApp us instead.' });
   }
-  if (s.sent) return <div className="border border-ink/15 bg-paper p-6"><Check className="text-sienna mb-2" /><p className="display text-2xl tracking-tightest mb-1">Sent to our planners.</p><p className="text-stone-600 text-sm">They will reply by email with a proper quote, usually within a working day.</p></div>;
+  if (s.sent) return <div className="border border-ink/15 bg-paper p-6"><Check className="text-accent mb-2" /><p className="display text-2xl tracking-tightest mb-1">Sent to our planners.</p><p className="text-stone-600 text-sm">They will reply by email with a proper quote, usually within a working day.</p></div>;
   const f = 'w-full bg-transparent border-b border-ink/30 py-3 focus:outline-none focus:border-sienna';
   return (
     <form onSubmit={submit} className="border border-ink/15 bg-paper p-6 space-y-4">
@@ -46,7 +46,7 @@ function Result({ data, onRestart }) {
   const hero = plan.items[0];
   return (
     <div>
-      <div className="flex items-center justify-between mb-8"><p className="eyebrow">Your plan</p><button onClick={onRestart} className="eyebrow flex items-center gap-2 hover:text-sienna"><RotateCcw size={13} /> Start over</button></div>
+      <div className="flex items-center justify-between mb-8"><p className="eyebrow">Your plan</p><button onClick={onRestart} className="eyebrow flex items-center gap-2 hover:text-accent-strong"><RotateCcw size={13} /> Start over</button></div>
       <div className="grid lg:grid-cols-12 gap-10">
         <div className="lg:col-span-7">
           <div className="relative aspect-16/10 overflow-hidden bg-stone-100 mb-6"><Img src={hero.photo} alt={hero.title} sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />{hero.stock && <span className="absolute bottom-3 left-3 eyebrow bg-ink/70 text-bone px-2.5 py-1">Illustrative photo</span>}</div>
@@ -55,7 +55,7 @@ function Result({ data, onRestart }) {
           <ol className="space-y-4">
             {plan.items.map((i, k) => (
               <li key={i.slug} className="border border-ink/15 p-5">
-                <div className="flex items-start justify-between gap-4"><div><p className="eyebrow text-sienna-dark mb-1">{i.day ? `Day ${i.day}` : `${i.days} days`} · {i.place}</p><Link href={i.url} className="display text-2xl tracking-tightest hover:text-sienna">{i.title}</Link></div><p className="display text-2xl tracking-tightest shrink-0">{money(i.price)}</p></div>
+                <div className="flex items-start justify-between gap-4"><div><p className="eyebrow text-accent-strong mb-1">{i.day ? `Day ${i.day}` : `${i.days} days`} · {i.place}</p><Link href={i.url} className="display text-2xl tracking-tightest hover:text-accent-strong">{i.title}</Link></div><p className="display text-2xl tracking-tightest shrink-0">{money(i.price)}</p></div>
                 <p className="text-sm text-stone-600 mt-2">{i.tagline}</p><p className="text-xs text-stone-500 mt-2">{i.why}.</p>
               </li>
             ))}
@@ -70,7 +70,7 @@ function Result({ data, onRestart }) {
             <p className="text-sm text-stone-600 mb-5">{money(plan.perPerson)} per person × {answers.travellers}. Your firm price depends on dates and party, and is shown at checkout.</p>
             <Link href={hero.url} className="block text-center bg-ink text-bone px-6 py-4 eyebrow hover:bg-sienna transition">{plan.type === 'journey' ? 'Choose dates and book' : 'See it and pick a date'}</Link>
           </div>
-          {seasons.length > 0 && <div className="border border-ink/15 p-5"><p className="eyebrow mb-3">In {MONTHS[answers.month - 1]}</p><ul className="space-y-2 text-sm">{seasons.map((s) => <li key={s.slug}><Link href={`/destinations/${s.slug}`} className="font-medium hover:text-sienna">{s.name}</Link> <span className={s.good ? 'text-miombo' : 'text-stone-500'}>{s.good ? '· good time' : '· not the usual best'}</span>{s.note && <span className="block text-stone-600">{s.note}</span>}</li>)}</ul></div>}
+          {seasons.length > 0 && <div className="border border-ink/15 p-5"><p className="eyebrow mb-3">In {MONTHS[answers.month - 1]}</p><ul className="space-y-2 text-sm">{seasons.map((s) => <li key={s.slug}><Link href={`/destinations/${s.slug}`} className="font-medium hover:text-accent-strong">{s.name}</Link> <span className={s.good ? 'text-miombo' : 'text-stone-500'}>{s.good ? '· good time' : '· not the usual best'}</span>{s.note && <span className="block text-stone-600">{s.note}</span>}</li>)}</ul></div>}
           <SendPlan data={data} answers={answers} />
           <div className="flex flex-wrap gap-3"><button onClick={() => window.dispatchEvent(new Event('nosea:chat'))} className="flex items-center gap-2 border border-ink/20 px-4 py-3 text-sm hover:bg-ink hover:text-bone transition"><MessageCircle size={15} /> Ask the concierge</button><a href={waLink(`Hello Nosea Safaris, I used the trip planner: ${plan.title}.`)} className="flex items-center gap-2 border border-ink/20 px-4 py-3 text-sm hover:bg-ink hover:text-bone transition">WhatsApp us</a></div>
         </aside>
@@ -118,7 +118,7 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
   const next = () => { if (step === STEPS.length - 1) run(a); else { setStep(step + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); } };
   const restart = () => { setData(null); setStep(0); setPreview(null); router.replace('/plan', { scroll: false }); };
 
-  if (loading) return <div className="py-32 text-center"><Loader2 className="animate-spin mx-auto mb-4 text-sienna" /><p className="display text-3xl tracking-tightest">Building your plan…</p></div>;
+  if (loading) return <div className="py-32 text-center"><Loader2 className="animate-spin mx-auto mb-4 text-accent" /><p className="display text-3xl tracking-tightest">Building your plan…</p></div>;
   if (data) return <Result data={data} onRestart={restart} />;
 
   const q = STEPS[step];
@@ -131,11 +131,11 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
         <div className="flex items-center justify-between mb-3"><p className="eyebrow">Step {step + 1} of {STEPS.length}</p><p className="eyebrow text-stone-500">{['Who', 'Where', 'Love', 'Days', 'When', 'Budget'][step]}</p></div>
         <div className="flex gap-1 mb-10" aria-hidden="true">{STEPS.map((s, i) => <button key={s} type="button" onClick={() => i < step && setStep(i)} className={`h-1.5 flex-1 ${i <= step ? 'bg-sunset' : 'bg-stone-200'} ${i < step ? 'cursor-pointer' : 'cursor-default'}`} tabIndex={-1} />)}</div>
 
-        {q === 'who' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-8">Who is <em className="text-sienna" style={{ fontStyle: 'italic' }}>travelling?</em></h2>
+        {q === 'who' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-8">Who is <em className="text-accent" style={{ fontStyle: 'italic' }}>travelling?</em></h2>
           <div className="grid sm:grid-cols-2 gap-3 mb-8">{WHO.map(([id, label, Icon]) => <Card key={id} on={a.who === id} onClick={() => set('who', id)}><Icon size={22} strokeWidth={1.4} className="mb-3" />{label}</Card>)}</div>
           <div className="flex items-center gap-4"><span className="eyebrow">How many people?</span><div className="flex items-center gap-3"><button type="button" onClick={() => set('travellers', Math.max(1, a.travellers - 1))} className="w-10 h-10 border border-ink/25 hover:bg-ink hover:text-bone" aria-label="Fewer">−</button><span className="display text-3xl w-10 text-center">{a.travellers}</span><button type="button" onClick={() => set('travellers', Math.min(40, a.travellers + 1))} className="w-10 h-10 border border-ink/25 hover:bg-ink hover:text-bone" aria-label="More">+</button></div></div></>}
 
-        {q === 'where' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">Any place in <em className="text-sienna" style={{ fontStyle: 'italic' }}>mind?</em></h2><p className="text-stone-600 mb-8">Optional. Pick one, or let us choose.</p>
+        {q === 'where' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">Any place in <em className="text-accent" style={{ fontStyle: 'italic' }}>mind?</em></h2><p className="text-stone-600 mb-8">Optional. Pick one, or let us choose.</p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             <button type="button" onClick={() => set('dest', null)} aria-pressed={!a.dest} className={`aspect-4/3 border p-4 text-left flex flex-col justify-end transition ${!a.dest ? 'bg-ink text-bone border-ink' : 'border-ink/20 hover:border-ink'}`}><span className="eyebrow mb-1 opacity-70">Open</span><span className="display text-2xl tracking-tightest">Surprise me</span></button>
             {destinations.map((d) => (
@@ -147,7 +147,7 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
             ))}
           </div></>}
 
-        {q === 'interests' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">What do you <em className="text-sienna" style={{ fontStyle: 'italic' }}>love?</em></h2><p className="text-stone-600 mb-8">Pick up to four.</p>
+        {q === 'interests' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">What do you <em className="text-accent" style={{ fontStyle: 'italic' }}>love?</em></h2><p className="text-stone-600 mb-8">Pick up to four.</p>
           <div className="grid grid-cols-2 gap-3">{INTERESTS.map(([id, label, blurb]) => { const on = a.interests.includes(id); return (
             <button key={id} type="button" onClick={() => toggle(id)} aria-pressed={on} className={`relative aspect-4/3 overflow-hidden text-left text-bone ${on ? 'ring-2 ring-sienna ring-offset-2' : ''}`}>
               {interestPhotos[id] && <Img src={interestPhotos[id]} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />}<div className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/30 to-ink/10" />
@@ -155,16 +155,16 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
               {on && <span className="absolute top-3 right-3 w-6 h-6 rounded-full bg-sunset flex items-center justify-center"><Check size={14} /></span>}
             </button>); })}</div></>}
 
-        {q === 'days' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-8">How many <em className="text-sienna" style={{ fontStyle: 'italic' }}>days?</em></h2>
+        {q === 'days' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-8">How many <em className="text-accent" style={{ fontStyle: 'italic' }}>days?</em></h2>
           <p className="display text-8xl tracking-tightest mb-4">{a.days}<span className="eyebrow ml-3 text-stone-500">{a.days === 1 ? 'day' : 'days'}</span></p>
           <input type="range" min={1} max={14} value={a.days} onChange={(e) => set('days', +e.target.value)} className="w-full accent-[#F46F30]" aria-label="Number of days" />
           <div className="flex justify-between eyebrow text-stone-500 mt-2"><span>A day trip</span><span>Two weeks</span></div></>}
 
-        {q === 'when' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">When are you <em className="text-sienna" style={{ fontStyle: 'italic' }}>thinking?</em></h2><p className="text-stone-600 mb-8">We will tell you how each place is that month.</p>
+        {q === 'when' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">When are you <em className="text-accent" style={{ fontStyle: 'italic' }}>thinking?</em></h2><p className="text-stone-600 mb-8">We will tell you how each place is that month.</p>
           <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mb-4">{MONTHS.map((m, i) => <Card key={m} on={a.month === i + 1} onClick={() => set('month', i + 1)} className="!p-4 text-center">{m}</Card>)}</div>
-          <button type="button" onClick={() => set('month', null)} className={`text-sm underline ${a.month === null ? 'text-sienna-dark' : ''}`}>I am flexible</button></>}
+          <button type="button" onClick={() => set('month', null)} className={`text-sm underline ${a.month === null ? 'text-accent-strong' : ''}`}>I am flexible</button></>}
 
-        {q === 'budget' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">What feels <em className="text-sienna" style={{ fontStyle: 'italic' }}>right?</em></h2><p className="text-stone-600 mb-8">Per person, for the whole trip. It only helps us rank; nothing is locked in.</p>
+        {q === 'budget' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">What feels <em className="text-accent" style={{ fontStyle: 'italic' }}>right?</em></h2><p className="text-stone-600 mb-8">Per person, for the whole trip. It only helps us rank; nothing is locked in.</p>
           <div className="grid sm:grid-cols-2 gap-3">{BUDGET.map(([id, label, blurb]) => <Card key={id} on={a.budget === id} onClick={() => set('budget', id)}><p className="display text-2xl tracking-tightest">{label}</p><p className={`text-sm mt-1 ${a.budget === id ? 'text-bone/70' : 'text-stone-500'}`}>{blurb}</p></Card>)}</div></>}
 
         {error && <p className="text-sm text-red-700 mt-6" role="alert">{error}</p>}
@@ -176,7 +176,7 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
           {pvItem ? (
             <div className="p-5 pt-3">
               <div className="relative aspect-4/3 overflow-hidden bg-stone-100 mb-4"><Img src={pvItem.photo} alt={pvItem.title} sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /></div>
-              <p className="eyebrow text-sienna-dark mb-1">{pv.type === 'journey' ? `${pv.days}-day journey` : `${pv.days} ${pv.days === 1 ? 'day' : 'days'}`}{placeName ? ` · ${placeName}` : ''}</p>
+              <p className="eyebrow text-accent-strong mb-1">{pv.type === 'journey' ? `${pv.days}-day journey` : `${pv.days} ${pv.days === 1 ? 'day' : 'days'}`}{placeName ? ` · ${placeName}` : ''}</p>
               <p className="display text-3xl tracking-tightest leading-tight mb-2">{pv.title}</p>
               <p className="text-sm text-stone-600">{pvItem.why}.</p>
               <div className="flex items-end justify-between mt-4 pt-4 border-t border-ink/10"><span className="eyebrow text-stone-500">About {money(pv.perPerson)} per person</span><span className="display text-2xl tracking-tightest">{money(pv.party)}<span className="eyebrow text-stone-500 ml-1">for {a.travellers}</span></span></div>
@@ -185,7 +185,7 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
         </div>
       </aside>
 
-      <div className="fixed inset-x-0 bottom-0 z-30 bg-bone/95 backdrop-blur border-t border-ink/10">
+      <div className="fixed inset-x-0 bottom-0 z-30 bg-bone/95 backdrop-blur border-t border-ink/10" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
           <button type="button" onClick={() => setStep(Math.max(0, step - 1))} disabled={step === 0} className="eyebrow flex items-center gap-2 disabled:opacity-30"><ArrowLeft size={14} /> Back</button>
           <div className="flex items-center gap-3"><button type="button" onClick={next} className="bg-ink text-bone px-8 py-4 eyebrow hover:bg-sienna transition flex items-center gap-2">{step === STEPS.length - 1 ? 'Build my plan' : 'Next'} <ArrowRight size={14} /></button></div>

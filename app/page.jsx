@@ -19,10 +19,10 @@ export default async function Home() {
 
   return (
     <>
-      <section className="relative min-h-[88vh] grain overflow-hidden bg-ink">
+      <section className="relative min-h-[88svh] grain overflow-hidden bg-ink">
         <Img src={STOCK.hero} alt="A safari vehicle crossing the savanna at sunset" sizes="100vw" priority quality={70} className="object-cover" />
         <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/40 to-ink/10" />
-        <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-24 pb-10 flex flex-col min-h-[88vh] justify-end text-bone">
+        <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-24 pb-10 flex flex-col min-h-[88svh] justify-end text-bone">
           <p className="eyebrow mb-6 text-bone/80 rise rise-1">Harare · Victoria Falls · Hwange · Namibia</p>
           <h1 className="display rise rise-2 text-[clamp(2.75rem,9vw,9rem)] tracking-tightest leading-[0.92] max-w-[14ch] mb-5">
             Experience the <em className="text-sienna-light" style={{ fontStyle: 'italic' }}>wilderness.</em>
@@ -35,8 +35,8 @@ export default async function Home() {
 
       <section className="max-w-[1400px] mx-auto px-6 md:px-10 pt-20 md:pt-28" aria-label="Where we go">
         <div className="flex items-end justify-between mb-10">
-          <div><p className="eyebrow mb-4">001 — Where we go</p><h2 className="display text-5xl md:text-7xl tracking-tightest leading-none">Pick a <em className="text-sienna" style={{ fontStyle: 'italic' }}>place.</em></h2></div>
-          <Link href="/destinations" className="hidden md:flex eyebrow items-center gap-2 hover:text-sienna transition">All destinations <ArrowRight size={14} /></Link>
+          <div><p className="eyebrow mb-4">001 — Where we go</p><h2 className="display text-5xl md:text-7xl tracking-tightest leading-none">Pick a <em className="text-accent" style={{ fontStyle: 'italic' }}>place.</em></h2></div>
+          <Link href="/destinations" className="hidden md:flex eyebrow items-center gap-2 hover:text-accent-strong transition">All destinations <ArrowRight size={14} /></Link>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {dests.map((d, i) => <DestinationTile key={d.slug} d={d} photo={d.photo} count={d.trips.length} big={i === 0} className={i === 0 ? 'col-span-2 row-span-2 aspect-4/3 lg:aspect-auto lg:min-h-[560px]' : 'aspect-4/5'} />)}
@@ -48,10 +48,10 @@ export default async function Home() {
           <div className="md:col-span-2"><p className="eyebrow">002 — Manifesto</p></div>
           <div className="md:col-span-10">
             <p className="display text-3xl md:text-5xl lg:text-6xl tracking-tightest leading-[1.05] max-w-[22ch]">
-              Southern Africa is not a checklist. It is a region of <em className="text-sienna" style={{ fontStyle: 'italic' }}>weather,</em> of <em className="text-sienna" style={{ fontStyle: 'italic' }}>light,</em> and of people who remember you when you return.
+              Southern Africa is not a checklist. It is a region of <em className="text-accent" style={{ fontStyle: 'italic' }}>weather,</em> of <em className="text-accent" style={{ fontStyle: 'italic' }}>light,</em> and of people who remember you when you return.
             </p>
             <div className="mt-14 grid md:grid-cols-3 gap-10 max-w-4xl">
-              {[['Ground-sourced', 'We work with guides, camps and drivers we know personally, and send guests only where we would go ourselves.'], ['One clear price', 'What is included and what is not is written down before you pay, in US dollars.'], ['Slow by design', 'We pace trips for the landscape, not the itinerary. A good journey has margin in it.']].map(([h, p]) => <div key={h}><p className="eyebrow text-sienna mb-3">{h}</p><p className="text-sm leading-relaxed text-ink/80">{p}</p></div>)}
+              {[['Ground-sourced', 'We work with guides, camps and drivers we know personally, and send guests only where we would go ourselves.'], ['One clear price', 'What is included and what is not is written down before you pay, in US dollars.'], ['Slow by design', 'We pace trips for the landscape, not the itinerary. A good journey has margin in it.']].map(([h, p]) => <div key={h}><p className="eyebrow text-accent-strong mb-3">{h}</p><p className="text-sm leading-relaxed text-ink/80">{p}</p></div>)}
             </div>
           </div>
         </div>
@@ -59,8 +59,8 @@ export default async function Home() {
 
       <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-24 md:py-32">
         <div className="flex items-end justify-between mb-14">
-          <div><p className="eyebrow mb-4">003 — Day experiences</p><h2 className="display text-5xl md:text-7xl tracking-tightest leading-none">Start with a <em className="text-sienna" style={{ fontStyle: 'italic' }}>day.</em></h2></div>
-          <Link href="/experiences" className="hidden md:flex eyebrow items-center gap-2 hover:text-sienna transition">All {exp.length} experiences <ArrowRight size={14} /></Link>
+          <div><p className="eyebrow mb-4">003 — Day experiences</p><h2 className="display text-5xl md:text-7xl tracking-tightest leading-none">Start with a <em className="text-accent" style={{ fontStyle: 'italic' }}>day.</em></h2></div>
+          <Link href="/experiences" className="hidden md:flex eyebrow items-center gap-2 hover:text-accent-strong transition">All {exp.length} experiences <ArrowRight size={14} /></Link>
         </div>
         {featured.length ? <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">{featured.map((t) => <ListingCard key={t.slug} t={t} />)}</div> : <p className="text-stone-500">Experiences are being updated. Please check back shortly.</p>}
       </section>
@@ -73,7 +73,7 @@ export default async function Home() {
               <p className="eyebrow text-sienna-light mb-6">A day we love</p>
               <h3 className="display text-4xl md:text-6xl tracking-tightest leading-[1.05] mb-8">{dispatch.title}</h3>
               <p className="text-stone-200 leading-relaxed max-w-lg mb-8">{dispatch.tagline}</p>
-              <Link href={`/experiences/${dispatch.slug}`} className="eyebrow inline-flex items-center gap-2 text-bone hover:text-sienna-light transition">See the day · from ${dispatch.price} <ArrowUpRight size={14} /></Link>
+              <Link href={`/experiences/${dispatch.slug}`} className="eyebrow inline-flex items-center gap-2 py-3 text-bone hover:text-sienna-light transition">See the day · from ${dispatch.price} <ArrowUpRight size={14} /></Link>
             </div>
           </div>
         </section>
@@ -106,14 +106,14 @@ export default async function Home() {
 
       <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-24 md:py-32">
         <p className="eyebrow mb-4">005 — Why Nosea</p>
-        <h2 className="display text-5xl md:text-6xl tracking-tightest leading-none mb-14 max-w-[16ch]">Local people, <em className="text-sienna" style={{ fontStyle: 'italic' }}>real</em> plans.</h2>
+        <h2 className="display text-5xl md:text-6xl tracking-tightest leading-none mb-14 max-w-[16ch]">Local people, <em className="text-accent" style={{ fontStyle: 'italic' }}>real</em> plans.</h2>
         <div className="grid md:grid-cols-4 gap-8">
           {[
             [Compass, 'Planned by locals', 'A Harare team that knows the guides, the camps and the roads.'],
             [CalendarCheck, 'Live availability', 'See the dates that are open and the seats left, then book in minutes.'],
             [ShieldCheck, 'Pay securely', 'Your payment is taken on a secure hosted page. We never see your card.'],
             [Map, 'Your trip, your way', 'Add a night, swap a camp, build a loop. Tell us and we shape it.'],
-          ].map(([Icon, h, p]) => <div key={h} className="border-t border-ink pt-5"><Icon size={22} strokeWidth={1.4} className="text-sienna mb-4" /><h3 className="display text-2xl tracking-tightest mb-2">{h}</h3><p className="text-stone-600 leading-relaxed text-sm">{p}</p></div>)}
+          ].map(([Icon, h, p]) => <div key={h} className="border-t border-ink pt-5"><Icon size={22} strokeWidth={1.4} className="text-accent mb-4" /><h3 className="display text-2xl tracking-tightest mb-2">{h}</h3><p className="text-stone-600 leading-relaxed text-sm">{p}</p></div>)}
         </div>
       </section>
 
