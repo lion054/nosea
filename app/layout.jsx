@@ -7,9 +7,9 @@ import Concierge from '@/components/Concierge';
 import { SITE } from '@/lib/site';
 
 // Self-hosted, subset, swap: no render-blocking request to a font CDN.
-const display = Fraunces({ subsets: ['latin'], variable: '--font-display', axes: ['opsz', 'SOFT'], style: ['normal', 'italic'], display: 'swap' });
-const sans = Instrument_Sans({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
-const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', weight: ['400', '500'], display: 'swap' });
+const display = Fraunces({ subsets: ['latin'], variable: '--nf-display', axes: ['opsz', 'SOFT'], style: ['normal', 'italic'], display: 'swap' });
+const sans = Instrument_Sans({ subsets: ['latin'], variable: '--nf-sans', display: 'swap' });
+const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--nf-mono', weight: ['400', '500'], display: 'swap' });
 
 const DESC = 'Day experiences and multi-day journeys across Zimbabwe, Namibia and Botswana, planned and led by a Harare-based local team. Live availability, instant online booking.';
 
@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <body className="bg-bone text-ink min-h-screen flex flex-col">
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-ink focus:text-bone focus:px-4 focus:py-3">Skip to content</a>
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-100 focus:bg-ink focus:text-bone focus:px-4 focus:py-3">Skip to content</a>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }} />
         <Nav links={LINKS} />
         <main id="main" className="flex-1">{children}</main>

@@ -8,7 +8,8 @@ import { STOCK } from '@/lib/images';
 export const revalidate = 300;
 export const metadata = { title: 'Plan your trip', description: 'Answer a few quick questions and get a trip built from Nosea Safaris real experiences and journeys, with an indicative price and the best months to go.' };
 
-export default async function Page({ searchParams }) {
+export default async function Page(props) {
+  const searchParams = await props.searchParams;
   const [dests, all] = await Promise.all([getDestinations(), getAll()]);
   const destinations = dests.filter((d) => d.trips.length).map((d) => ({ slug: d.slug, name: d.name, photo: d.photo, count: d.trips.length }));
   const fallback = { wildlife: STOCK.rhino, adventure: STOCK.sunset, culture: STOCK.giraffe, nature: STOCK.forest, water: STOCK.giraffe, relaxed: STOCK.camp };

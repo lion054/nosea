@@ -21,7 +21,7 @@ export default async function Home() {
     <>
       <section className="relative min-h-[88vh] grain overflow-hidden bg-ink">
         <Img src={STOCK.hero} alt="A safari vehicle crossing the savanna at sunset" sizes="100vw" priority quality={70} className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/10" />
+        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/40 to-ink/10" />
         <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-24 pb-10 flex flex-col min-h-[88vh] justify-end text-bone">
           <p className="eyebrow mb-6 text-bone/80 rise rise-1">Harare · Victoria Falls · Hwange · Namibia</p>
           <h1 className="display rise rise-2 text-[clamp(2.75rem,9vw,9rem)] tracking-tightest leading-[0.92] max-w-[14ch] mb-5">
@@ -39,7 +39,7 @@ export default async function Home() {
           <Link href="/destinations" className="hidden md:flex eyebrow items-center gap-2 hover:text-sienna transition">All destinations <ArrowRight size={14} /></Link>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-          {dests.map((d, i) => <DestinationTile key={d.slug} d={d} photo={d.photo} count={d.trips.length} big={i === 0} className={i === 0 ? 'col-span-2 row-span-2 aspect-[4/3] lg:aspect-auto lg:min-h-[560px]' : 'aspect-[4/5]'} />)}
+          {dests.map((d, i) => <DestinationTile key={d.slug} d={d} photo={d.photo} count={d.trips.length} big={i === 0} className={i === 0 ? 'col-span-2 row-span-2 aspect-4/3 lg:aspect-auto lg:min-h-[560px]' : 'aspect-4/5'} />)}
         </div>
       </section>
 
@@ -88,9 +88,9 @@ export default async function Home() {
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {journeys.map((t) => (
-                <Link key={t.slug} href={`/journeys/${t.slug}`} className="group block relative aspect-[3/4] overflow-hidden bg-stone-600">
+                <Link key={t.slug} href={`/journeys/${t.slug}`} className="group block relative aspect-3/4 overflow-hidden bg-stone-600">
                   <Img src={t.photos[0]} alt={t.title} sizes="(min-width: 768px) 33vw, 100vw" className="card-img object-cover opacity-80 group-hover:opacity-100 transition" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/30 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6">
                     <p className="eyebrow text-sienna-light mb-2">{t.days} days · from ${t.price.toLocaleString()}</p>
                     <h3 className="display text-3xl md:text-4xl tracking-tightest leading-none mb-2">{t.title}</h3>

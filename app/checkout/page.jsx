@@ -2,7 +2,8 @@ import { redirect } from 'next/navigation';
 import { getBySlug } from '@/lib/catalog';
 import CheckoutForm from '@/components/CheckoutForm';
 export const metadata = { title: 'Checkout', robots: { index: false } };
-export default async function Page({ searchParams }) {
+export default async function Page(props) {
+  const searchParams = await props.searchParams;
   const t = await getBySlug(searchParams?.slug || '');
   const date = searchParams?.date || '';
   if (!t || !/^\d{4}-\d{2}-\d{2}$/.test(date)) redirect('/experiences');

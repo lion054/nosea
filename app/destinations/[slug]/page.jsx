@@ -8,12 +8,14 @@ import SeasonPicker from '@/components/SeasonPicker';
 
 export const revalidate = 300;
 export async function generateStaticParams() { return DESTINATIONS.map((d) => ({ slug: d.slug })); }
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const d = DESTINATIONS.find((x) => x.slug === params.slug);
   return d ? { title: d.name, description: `${d.blurb} Best time to go: ${seasonLabel(d)}.` } : {};
 }
 
-export default async function Page({ params }) {
+export default async function Page(props) {
+  const params = await props.params;
   const d = (await getDestinations()).find((x) => x.slug === params.slug);
   if (!d) notFound();
   const exp = d.trips.filter((t) => t.kind === 'experience');
@@ -23,7 +25,7 @@ export default async function Page({ params }) {
     <>
       <section className="relative h-[60vh] min-h-[420px] overflow-hidden bg-ink grain">
         <Img src={d.photo} alt={d.name} sizes="100vw" priority className="object-cover opacity-90" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/30 to-transparent" />
         <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 h-full flex flex-col justify-end pb-12 text-bone">
           <nav className="eyebrow text-bone/70 mb-4"><Link href="/destinations" className="hover:text-bone">Destinations</Link> / {d.country}</nav>
           <h1 className="display text-6xl md:text-9xl tracking-tightest leading-[0.9]">{d.name}</h1>

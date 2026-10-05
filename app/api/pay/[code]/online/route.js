@@ -4,7 +4,8 @@ import { CODE_RE, siteOrigin } from '@/lib/payment';
 import { limited, ipOf } from '@/lib/rateLimit';
 
 // Starts a gateway payment. The guest is sent to the gateway's own page (card details are never typed on this site) and comes back to /booking/confirmed.
-export async function POST(req, { params }) {
+export async function POST(req, ctx) {
+  const params = await ctx.params;
   if (!CODE_RE.test(params.code)) return NextResponse.json({ error: 'Booking not found.' }, { status: 404 });
   if (limited(`payon:${ipOf(req)}`, 10)) return NextResponse.json({ error: 'Too many attempts. Please wait a few minutes.' }, { status: 429 });
   const b = await req.json().catch(() => ({}));

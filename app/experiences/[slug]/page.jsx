@@ -4,5 +4,5 @@ import { getAll } from '@/lib/catalog';
 export const revalidate = 300;
 export const dynamicParams = true;
 export async function generateStaticParams() { return (await getAll()).filter((t) => t.kind === 'experience').map((t) => ({ slug: t.slug })); }
-export async function generateMetadata({ params }) { return detailMeta(params.slug, 'experience'); }
-export default function Page({ params }) { return <Detail slug={params.slug} kind="experience" />; }
+export async function generateMetadata(props) { const { slug } = await props.params; return detailMeta(slug, 'experience'); }
+export default async function Page(props) { const { slug } = await props.params; return <Detail slug={slug} kind="experience" />; }

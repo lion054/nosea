@@ -7,7 +7,7 @@ export default function DestinationTile({ d, photo, count, className = '', big =
   return (
     <Link href={`/destinations/${d.slug}`} className={`group relative block overflow-hidden bg-ink ${className}`}>
       <Img src={photo} alt={d.name} sizes={big ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'} className="card-img object-cover opacity-90 group-hover:opacity-100 transition" />
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/25 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 text-bone">
         <p className="eyebrow text-sienna-light mb-2">{d.country}{count ? ` · ${count} ${count === 1 ? 'trip' : 'trips'}` : ''}</p>
         <h3 className={`display tracking-tightest leading-none ${big ? 'text-4xl md:text-6xl' : 'text-3xl md:text-4xl'}`}>{d.name}</h3>
