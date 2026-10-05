@@ -20,7 +20,7 @@ export default async function Home() {
   return (
     <>
       <section className="relative min-h-[88svh] grain overflow-hidden bg-ink">
-        <Img src={STOCK.hero} alt="A safari vehicle crossing the savanna at sunset" sizes="100vw" priority quality={70} className="object-cover" />
+        <Img src={STOCK.hero} alt="A safari vehicle crossing the savanna at sunset" sizes="(max-width: 767px) 640px, 100vw" priority quality={60} className="object-cover" />
         <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/40 to-ink/10" />
         <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-24 pb-10 flex flex-col min-h-[88svh] justify-end text-bone">
           <p className="eyebrow mb-6 text-bone/80 rise rise-1">Harare · Victoria Falls · Hwange · Namibia</p>

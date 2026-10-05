@@ -7,9 +7,9 @@ import ConciergeLazy from '@/components/ConciergeLazy';
 import { SITE } from '@/lib/site';
 
 // Self-hosted, subset, swap: no render-blocking request to a font CDN.
-const display = Fraunces({ subsets: ['latin'], variable: '--nf-display', axes: ['opsz', 'SOFT'], style: ['normal', 'italic'], display: 'swap' });
+const display = Fraunces({ subsets: ['latin'], variable: '--nf-display', weight: '400', style: ['normal', 'italic'], display: 'swap' });
 const sans = Instrument_Sans({ subsets: ['latin'], variable: '--nf-sans', display: 'swap' });
-const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--nf-mono', weight: ['400', '500'], display: 'swap' });
+const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--nf-mono', weight: '500', display: 'swap' });
 
 const DESC = 'Day experiences and multi-day journeys across Zimbabwe, Namibia and Botswana, planned and led by a Harare-based local team. Live availability, instant online booking.';
 
