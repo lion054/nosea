@@ -9,7 +9,7 @@ export default function ListingCard({ t, variant = 'grid' }) {
     return (
       <Link href={hrefFor(t)} className="group block border-t border-ink/15 pt-6">
         <div className="grid grid-cols-12 gap-4 md:gap-8">
-          <div className="col-span-5 md:col-span-3 relative aspect-[4/3] overflow-hidden bg-stone-100">
+          <div className="col-span-5 md:col-span-3 relative aspect-4/3 overflow-hidden bg-stone-100">
             <Img src={t.photos[0]} alt={t.title} sizes="(min-width: 768px) 25vw, 40vw" className="card-img object-cover" />
           </div>
           <div className="col-span-7 md:col-span-6">

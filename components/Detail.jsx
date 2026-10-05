@@ -46,7 +46,7 @@ export default async function Detail({ slug, kind }) {
               <ol className="relative border-l border-ink/20 ml-3 space-y-8">
                 {t.itinerary.map((d) => (
                   <li key={d.day} className="pl-8 relative">
-                    <span className="absolute -left-[13px] top-0 w-6 h-6 rounded-full bg-sienna text-bone text-[11px] flex items-center justify-center font-medium">{d.day}</span>
+                    <span className="absolute left-[-13px] top-0 w-6 h-6 rounded-full bg-sienna text-bone text-[11px] flex items-center justify-center font-medium">{d.day}</span>
                     <p className="eyebrow text-stone-500 mb-1">Day {d.day}</p>
                     <h3 className="display text-2xl tracking-tightest leading-tight mb-1">{d.title}</h3>
                     {d.desc && <p className="text-stone-600 leading-relaxed max-w-xl">{d.desc}</p>}

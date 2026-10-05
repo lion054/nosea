@@ -4,7 +4,8 @@ import { CODE_RE } from '@/lib/payment';
 import { limited, ipOf } from '@/lib/rateLimit';
 
 // "I have sent the transfer": tells the business, which confirms once the money arrives.
-export async function POST(req, { params }) {
+export async function POST(req, ctx) {
+  const params = await ctx.params;
   if (!CODE_RE.test(params.code)) return NextResponse.json({ error: 'Booking not found.' }, { status: 404 });
   if (limited(`paytr:${ipOf(req)}`, 6)) return NextResponse.json({ error: 'Too many attempts. Please wait a few minutes.' }, { status: 429 });
   const b = await req.json().catch(() => ({}));

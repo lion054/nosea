@@ -6,7 +6,8 @@ import { getPayment } from '@/lib/payment';
 export const metadata = { title: 'Your booking', robots: { index: false } };
 export const dynamic = 'force-dynamic';
 
-export default async function Page({ searchParams }) {
+export default async function Page(props) {
+  const searchParams = await props.searchParams;
   const code = (searchParams?.code || '').toString();
   const back = (searchParams?.status || '').toString();   // what the payment provider said on the way back
   const p = code ? await getPayment(code) : null;

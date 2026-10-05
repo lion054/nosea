@@ -4,7 +4,8 @@ import Browser from '@/components/Browser';
 export const revalidate = 300;
 export const metadata = { title: 'Day experiences', description: 'Game drives, sanctuary visits, cruises, hikes and cultural days across Zimbabwe and Namibia. Live availability, book online.' };
 
-export default async function Page({ searchParams }) {
+export default async function Page(props) {
+  const searchParams = await props.searchParams;
   const items = await getExperiences();
   return (
     <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-20">

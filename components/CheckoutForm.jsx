@@ -38,7 +38,7 @@ export default function CheckoutForm({ trip, date, adults, children }) {
       </form>
       <aside className="md:col-span-5">
         <div className="border border-ink/15 bg-paper sticky top-28">
-          <div className="relative aspect-[16/9] overflow-hidden"><Img src={trip.photo} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /></div>
+          <div className="relative aspect-16/9 overflow-hidden"><Img src={trip.photo} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /></div>
           <div className="p-6">
             <p className="eyebrow text-stone-500 mb-1">{trip.place} · {trip.duration}</p>
             <h2 className="display text-3xl tracking-tightest leading-tight mb-4">{trip.title}</h2>

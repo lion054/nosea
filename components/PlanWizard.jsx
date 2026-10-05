@@ -49,8 +49,8 @@ function Result({ data, onRestart }) {
       <div className="flex items-center justify-between mb-8"><p className="eyebrow">Your plan</p><button onClick={onRestart} className="eyebrow flex items-center gap-2 hover:text-sienna"><RotateCcw size={13} /> Start over</button></div>
       <div className="grid lg:grid-cols-12 gap-10">
         <div className="lg:col-span-7">
-          <div className="relative aspect-[16/10] overflow-hidden bg-stone-100 mb-6"><Img src={hero.photo} alt={hero.title} sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />{hero.stock && <span className="absolute bottom-3 left-3 eyebrow bg-ink/70 text-bone px-2.5 py-1">Illustrative photo</span>}</div>
-          <h2 className="display text-4xl md:text-6xl tracking-tightest leading-[1] mb-3">{plan.title}</h2>
+          <div className="relative aspect-16/10 overflow-hidden bg-stone-100 mb-6"><Img src={hero.photo} alt={hero.title} sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />{hero.stock && <span className="absolute bottom-3 left-3 eyebrow bg-ink/70 text-bone px-2.5 py-1">Illustrative photo</span>}</div>
+          <h2 className="display text-4xl md:text-6xl tracking-tightest leading-none mb-3">{plan.title}</h2>
           <p className="text-stone-600 mb-6">{plan.type === 'journey' ? `${plan.days}-day journey` : `${plan.days} ${plan.days === 1 ? 'day' : 'days'}`} · {answers.travellers} {answers.travellers === 1 ? 'traveller' : 'travellers'}</p>
           <ol className="space-y-4">
             {plan.items.map((i, k) => (
@@ -75,7 +75,7 @@ function Result({ data, onRestart }) {
           <div className="flex flex-wrap gap-3"><button onClick={() => window.dispatchEvent(new Event('nosea:chat'))} className="flex items-center gap-2 border border-ink/20 px-4 py-3 text-sm hover:bg-ink hover:text-bone transition"><MessageCircle size={15} /> Ask the concierge</button><a href={waLink(`Hello Nosea Safaris, I used the trip planner: ${plan.title}.`)} className="flex items-center gap-2 border border-ink/20 px-4 py-3 text-sm hover:bg-ink hover:text-bone transition">WhatsApp us</a></div>
         </aside>
       </div>
-      {alternatives.length > 0 && <div className="mt-16"><p className="eyebrow mb-4">Other ideas</p><div className="grid sm:grid-cols-3 gap-5">{alternatives.map((i) => <Link key={i.slug} href={i.url} className="group block"><div className="relative aspect-[4/3] overflow-hidden bg-stone-100 mb-3"><Img src={i.photo} alt={i.title} sizes="(min-width: 640px) 30vw, 100vw" className="card-img object-cover" /></div><p className="eyebrow text-stone-500">{i.duration} · from {money(i.price)}</p><p className="display text-xl tracking-tightest">{i.title}</p></Link>)}</div></div>}
+      {alternatives.length > 0 && <div className="mt-16"><p className="eyebrow mb-4">Other ideas</p><div className="grid sm:grid-cols-3 gap-5">{alternatives.map((i) => <Link key={i.slug} href={i.url} className="group block"><div className="relative aspect-4/3 overflow-hidden bg-stone-100 mb-3"><Img src={i.photo} alt={i.title} sizes="(min-width: 640px) 30vw, 100vw" className="card-img object-cover" /></div><p className="eyebrow text-stone-500">{i.duration} · from {money(i.price)}</p><p className="display text-xl tracking-tightest">{i.title}</p></Link>)}</div></div>}
     </div>
   );
 }
@@ -137,10 +137,10 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
 
         {q === 'where' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">Any place in <em className="text-sienna" style={{ fontStyle: 'italic' }}>mind?</em></h2><p className="text-stone-600 mb-8">Optional. Pick one, or let us choose.</p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            <button type="button" onClick={() => set('dest', null)} aria-pressed={!a.dest} className={`aspect-[4/3] border p-4 text-left flex flex-col justify-end transition ${!a.dest ? 'bg-ink text-bone border-ink' : 'border-ink/20 hover:border-ink'}`}><span className="eyebrow mb-1 opacity-70">Open</span><span className="display text-2xl tracking-tightest">Surprise me</span></button>
+            <button type="button" onClick={() => set('dest', null)} aria-pressed={!a.dest} className={`aspect-4/3 border p-4 text-left flex flex-col justify-end transition ${!a.dest ? 'bg-ink text-bone border-ink' : 'border-ink/20 hover:border-ink'}`}><span className="eyebrow mb-1 opacity-70">Open</span><span className="display text-2xl tracking-tightest">Surprise me</span></button>
             {destinations.map((d) => (
-              <button key={d.slug} type="button" onClick={() => set('dest', d.slug)} aria-pressed={a.dest === d.slug} className={`relative aspect-[4/3] overflow-hidden text-left text-bone ${a.dest === d.slug ? 'ring-2 ring-sienna ring-offset-2' : ''}`}>
-                <Img src={d.photo} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent" />
+              <button key={d.slug} type="button" onClick={() => set('dest', d.slug)} aria-pressed={a.dest === d.slug} className={`relative aspect-4/3 overflow-hidden text-left text-bone ${a.dest === d.slug ? 'ring-2 ring-sienna ring-offset-2' : ''}`}>
+                <Img src={d.photo} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /><div className="absolute inset-0 bg-linear-to-t from-ink/85 via-ink/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4"><span className="eyebrow text-bone/70 block mb-1">{d.count} {d.count === 1 ? 'trip' : 'trips'}</span><span className="display text-2xl tracking-tightest leading-none">{d.name}</span></div>
                 {a.dest === d.slug && <span className="absolute top-3 right-3 w-6 h-6 rounded-full bg-sunset flex items-center justify-center"><Check size={14} /></span>}
               </button>
@@ -149,8 +149,8 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
 
         {q === 'interests' && <><h2 className="display text-4xl md:text-6xl tracking-tightest mb-3">What do you <em className="text-sienna" style={{ fontStyle: 'italic' }}>love?</em></h2><p className="text-stone-600 mb-8">Pick up to four.</p>
           <div className="grid grid-cols-2 gap-3">{INTERESTS.map(([id, label, blurb]) => { const on = a.interests.includes(id); return (
-            <button key={id} type="button" onClick={() => toggle(id)} aria-pressed={on} className={`relative aspect-[4/3] overflow-hidden text-left text-bone ${on ? 'ring-2 ring-sienna ring-offset-2' : ''}`}>
-              {interestPhotos[id] && <Img src={interestPhotos[id]} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />}<div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-ink/10" />
+            <button key={id} type="button" onClick={() => toggle(id)} aria-pressed={on} className={`relative aspect-4/3 overflow-hidden text-left text-bone ${on ? 'ring-2 ring-sienna ring-offset-2' : ''}`}>
+              {interestPhotos[id] && <Img src={interestPhotos[id]} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />}<div className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/30 to-ink/10" />
               <div className="absolute inset-x-0 bottom-0 p-4"><p className="display text-2xl tracking-tightest leading-none">{label}</p><p className="text-xs text-bone/75 mt-1">{blurb}</p></div>
               {on && <span className="absolute top-3 right-3 w-6 h-6 rounded-full bg-sunset flex items-center justify-center"><Check size={14} /></span>}
             </button>); })}</div></>}
@@ -175,7 +175,7 @@ export default function PlanWizard({ dest, destinations = [], interestPhotos = {
           <p className="eyebrow px-5 pt-5 text-stone-500">Best match so far</p>
           {pvItem ? (
             <div className="p-5 pt-3">
-              <div className="relative aspect-[4/3] overflow-hidden bg-stone-100 mb-4"><Img src={pvItem.photo} alt={pvItem.title} sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /></div>
+              <div className="relative aspect-4/3 overflow-hidden bg-stone-100 mb-4"><Img src={pvItem.photo} alt={pvItem.title} sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /></div>
               <p className="eyebrow text-sienna-dark mb-1">{pv.type === 'journey' ? `${pv.days}-day journey` : `${pv.days} ${pv.days === 1 ? 'day' : 'days'}`}{placeName ? ` · ${placeName}` : ''}</p>
               <p className="display text-3xl tracking-tightest leading-tight mb-2">{pv.title}</p>
               <p className="text-sm text-stone-600">{pvItem.why}.</p>
