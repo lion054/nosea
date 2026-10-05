@@ -12,6 +12,6 @@ export async function GET() {
     out.upstream = res.status;
     if (res.ok) { const j = await res.json(); out.trips = (j?.data?.data || []).filter((t) => t.status === 'publish').length; out.ok = out.trips > 0; }
     else out.hint = res.status === 401 ? 'The portal rejected the key: check TANOVA_API_KEY.' : res.status === 403 ? 'The portal refused this host (blocked or scope missing).' : 'The portal returned an error.';
-  } catch (e) { out.upstream = 'unreachable'; out.hint = `Could not reach the portal: ${e.message}. Check TANOVA_API_BASE.`; }
+  } catch { out.upstream = 'unreachable'; out.hint = 'Could not reach the portal. Check TANOVA_API_BASE (it should be a single address such as https://tanovaapp.com/api/v).'; }
   return NextResponse.json(out, { status: out.ok ? 200 : 503, headers: { 'Cache-Control': 'no-store' } });
 }
