@@ -13,7 +13,7 @@ export default function Page() {
       <section className="max-w-[1000px] mx-auto px-6 md:px-10 py-20 grid md:grid-cols-3 gap-10">
         {[['Local first', 'We work with Zimbabwean guides, camps and drivers we know personally, so what we promise is what you get.'], ['Honest planning', 'Clear prices in US dollars, what is and is not included, and the day-by-day plan before you pay.'], ['Flexible by default', 'Every journey can be shortened, extended or reshaped. If it is not on the site, ask.']].map(([h, p]) => <div key={h} className="border-t border-ink pt-5"><h2 className="display text-2xl tracking-tightest mb-2">{h}</h2><p className="text-stone-600 text-sm leading-relaxed">{p}</p></div>)}
       </section>
-      <section className="text-center pb-8"><Link href="/plan" className="inline-block bg-ink text-bone px-8 py-4 eyebrow hover:bg-sienna transition">Plan a trip with us</Link></section>
+      <section className="text-center pb-20"><Link href="/plan" className="inline-block bg-ink text-bone px-8 py-4 eyebrow hover:bg-sienna transition">Plan a trip with us</Link></section>
     </>
   );
 }

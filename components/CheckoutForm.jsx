@@ -25,7 +25,7 @@ export default function CheckoutForm({ trip, date, adults, children }) {
   }
 
   return (
-    <div className="max-w-[1100px] mx-auto px-6 md:px-10 pt-14 pb-8 grid md:grid-cols-12 gap-12">
+    <div className="max-w-[1100px] mx-auto px-6 md:px-10 pt-14 pb-20 grid md:grid-cols-12 gap-12">
       <form onSubmit={submit} className="md:col-span-7 space-y-6">
         <div><p className="eyebrow mb-3">Your details</p><h1 className="display text-5xl tracking-tightest leading-none">Almost there.</h1></div>
         <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />

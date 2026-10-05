@@ -4,7 +4,7 @@ import { SITE, waLink } from '@/lib/site';
 
 export default function Footer({ links }) {
   return (
-    <footer className="bg-ink text-bone mt-24 grain relative">
+    <footer className="bg-ink text-bone grain relative">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 grid md:grid-cols-12 gap-10">
         <div className="md:col-span-5">
           <Logo variant="light" tagline className="h-28 w-auto mb-6" />

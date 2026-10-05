@@ -42,7 +42,7 @@ export default function PayPanel({ p }) {
   );
 
   return (
-    <div className="max-w-[1100px] mx-auto px-6 md:px-10 pt-14 pb-8 grid md:grid-cols-12 gap-12">
+    <div className="max-w-[1100px] mx-auto px-6 md:px-10 pt-14 pb-20 grid md:grid-cols-12 gap-12">
       <div className="md:col-span-7 space-y-8">
         <div><p className="eyebrow mb-3">Step 2 of 2 · Payment</p><h1 className="display text-5xl tracking-tightest leading-none">Pay for your trip.</h1><p className="text-stone-600 mt-3">Your seats are held while you pay. Reference <strong>{p.invoice_number}</strong>.</p></div>
 

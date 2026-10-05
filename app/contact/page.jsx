@@ -3,7 +3,7 @@ import { SITE, waLink } from '@/lib/site';
 export const metadata = { title: 'Contact', description: 'Reach Nosea Safaris by WhatsApp, phone or email.' };
 export default function Page() {
   return (
-    <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-8 grid md:grid-cols-12 gap-12">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-20 grid md:grid-cols-12 gap-12">
       <div className="md:col-span-5">
         <p className="eyebrow mb-4">Contact</p>
         <h1 className="display text-5xl md:text-7xl tracking-tightest leading-[0.98] mb-8">Say <em className="text-sienna" style={{ fontStyle: 'italic' }}>hello.</em></h1>

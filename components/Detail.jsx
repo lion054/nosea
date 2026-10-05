@@ -25,7 +25,7 @@ export default async function Detail({ slug, kind }) {
     ...(t.itinerary.length ? { itinerary: { '@type': 'ItemList', itemListElement: t.itinerary.map((d, i) => ({ '@type': 'ListItem', position: i + 1, name: d.title })) } } : {}) };
   const facts = [[Clock, t.duration], [Users, `${t.minPeople > 1 ? `${t.minPeople}–` : 'Up to '}${t.maxPeople} guests`], [MapPin, t.place], t.difficulty && [Mountain, t.difficulty], t.season && [CalendarDays, `Best: ${t.season}`]].filter(Boolean);
   return (
-    <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-10 pb-8">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-10 pb-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
       <nav className="eyebrow text-stone-500 mb-6" aria-label="Breadcrumb"><Link href="/" className="hover:text-ink">Home</Link> / <Link href={journey ? '/journeys' : '/experiences'} className="hover:text-ink">{journey ? 'Journeys' : 'Experiences'}</Link></nav>
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">

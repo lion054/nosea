@@ -7,7 +7,7 @@ export const metadata = { title: 'Destinations', description: 'Victoria Falls, H
 export default async function Page() {
   const dests = (await getDestinations()).filter((d) => d.trips.length);
   return (
-    <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-8">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-20">
       <p className="eyebrow mb-4">Destinations</p>
       <h1 className="display text-5xl md:text-8xl tracking-tightest leading-[0.95] mb-6">Where we <em className="text-sienna" style={{ fontStyle: 'italic' }}>go.</em></h1>
       <p className="text-stone-600 max-w-xl mb-12 leading-relaxed">Eight places we know well. Each page shows what is on, when it is at its best, and the trips that go there.</p>

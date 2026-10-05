@@ -7,7 +7,7 @@ export const metadata = { title: 'Multi-day journeys', description: 'Multi-day s
 export default async function Page({ searchParams }) {
   const items = await getJourneys();
   return (
-    <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-8">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-20">
       <p className="eyebrow mb-4">Journeys</p>
       <h1 className="display text-5xl md:text-8xl tracking-tightest leading-[0.95] mb-6">Go <em className="text-sienna" style={{ fontStyle: 'italic' }}>further.</em></h1>
       <p className="text-stone-600 max-w-xl mb-12 leading-relaxed">Multi-day trips with every day laid out. Each can be shortened, extended or reshaped. Just ask.</p>
