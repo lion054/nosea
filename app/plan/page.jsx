@@ -6,7 +6,7 @@ import { INTERESTS } from '@/lib/planner';
 import { STOCK } from '@/lib/images';
 
 export const revalidate = 300;
-export const metadata = { title: 'Plan your trip', description: 'Answer a few quick questions and get a trip built from Nosea Safaris real experiences and journeys, with an indicative price and the best months to go.' };
+export const metadata = { alternates: { canonical: '/plan' }, title: 'Plan your trip', description: 'Answer a few quick questions and get a trip built from Nosea Safaris real experiences and journeys, with an indicative price and the best months to go.' };
 
 export default async function Page(props) {
   const searchParams = await props.searchParams;
@@ -18,8 +18,8 @@ export default async function Page(props) {
   return (
     <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-14">
       <p className="eyebrow mb-4">Trip planner</p>
-      <h1 className="display text-5xl md:text-7xl tracking-tightest leading-[0.98] mb-12 max-w-[16ch]">Tell us what you love. <em className="text-sienna" style={{ fontStyle: 'italic' }}>We will plan it.</em></h1>
-      <Suspense fallback={null}><PlanWizard dest={searchParams?.dest || null} destinations={destinations} interestPhotos={interestPhotos} /></Suspense>
+      <h1 className="display text-5xl md:text-7xl tracking-tightest leading-[0.98] mb-12 max-w-[16ch]">Tell us what you love. <em className="text-accent" style={{ fontStyle: 'italic' }}>We will plan it.</em></h1>
+      <Suspense fallback={<div className="min-h-[70vh]" aria-busy="true" />}><PlanWizard dest={searchParams?.dest || null} destinations={destinations} interestPhotos={interestPhotos} /></Suspense>
     </div>
   );
 }

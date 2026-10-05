@@ -19,7 +19,7 @@ export default async function Page(props) {
   const body = paid ? 'Your payment has been received. A confirmation is on its way to your email.' : failed ? 'You have not been charged. Your seats are held for a short while, so you can try again.' : 'This can take a minute. We will email you as soon as it is confirmed. If you paid by bank transfer, it is confirmed once the money arrives.';
   return (
     <div className="max-w-xl mx-auto px-6 py-24 text-center">
-      <Icon size={44} strokeWidth={1.3} className={`${failed ? 'text-red-700' : 'text-sienna'} mx-auto mb-6`} />
+      <Icon size={44} strokeWidth={1.3} className={`${failed ? 'text-red-700' : 'text-accent'} mx-auto mb-6`} />
       <h1 className="display text-5xl tracking-tightest mb-4">{title}</h1>
       {p && !p.error && p.service?.title && <p className="text-lg mb-2"><strong>{p.service.title}</strong>{p.service.start_date ? ` · ${new Date(p.service.start_date + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}` : ''}</p>}
       <p className="text-stone-600 leading-relaxed mb-2">{body}{ref ? <> Reference <strong>{ref}</strong>.</> : ''}</p>

@@ -50,9 +50,9 @@ export default function BookingPanel({ slug, title, price, minPeople = 1, maxPeo
     <div className="flex items-center justify-between py-3">
       <div><p className="text-sm">{label}</p><p className="text-xs text-stone-500">{sub}</p></div>
       <div className="flex items-center gap-3">
-        <button type="button" onClick={() => set(Math.max(min, value - 1))} className="w-8 h-8 rounded-full border border-ink/25 flex items-center justify-center hover:bg-ink hover:text-bone transition disabled:opacity-30" disabled={value <= min} aria-label={`Fewer ${label}`}><Minus size={14} /></button>
+        <button type="button" onClick={() => set(Math.max(min, value - 1))} className="w-11 h-11 rounded-full border border-ink/25 flex items-center justify-center hover:bg-ink hover:text-bone active:bg-ink active:text-bone transition disabled:opacity-30" disabled={value <= min} aria-label={`Fewer ${label}`}><Minus size={14} /></button>
         <span className="w-5 text-center tabular-nums">{value}</span>
-        <button type="button" onClick={() => set(Math.min(maxPeople, value + 1))} className="w-8 h-8 rounded-full border border-ink/25 flex items-center justify-center hover:bg-ink hover:text-bone transition" aria-label={`More ${label}`}><Plus size={14} /></button>
+        <button type="button" onClick={() => set(Math.min(maxPeople, value + 1))} className="w-11 h-11 rounded-full border border-ink/25 flex items-center justify-center hover:bg-ink hover:text-bone active:bg-ink active:text-bone transition" aria-label={`More ${label}`}><Plus size={14} /></button>
       </div>
     </div>
   );
@@ -64,9 +64,9 @@ export default function BookingPanel({ slug, title, price, minPeople = 1, maxPeo
 
       <div className="mt-6 border-t border-ink/10 pt-5">
         <div className="flex items-center justify-between mb-3">
-          <button type="button" onClick={() => canPrev && setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))} disabled={!canPrev} className="w-8 h-8 flex items-center justify-center disabled:opacity-25" aria-label="Previous month"><ChevronLeft size={18} /></button>
+          <button type="button" onClick={() => canPrev && setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))} disabled={!canPrev} className="w-11 h-11 flex items-center justify-center disabled:opacity-25" aria-label="Previous month"><ChevronLeft size={18} /></button>
           <p className="eyebrow">{MONTHS[month.getMonth()]} {month.getFullYear()}{loading ? ' …' : ''}</p>
-          <button type="button" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))} className="w-8 h-8 flex items-center justify-center" aria-label="Next month"><ChevronRight size={18} /></button>
+          <button type="button" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))} className="w-11 h-11 flex items-center justify-center" aria-label="Next month"><ChevronRight size={18} /></button>
         </div>
         <div className="grid grid-cols-7 text-center eyebrow text-stone-500 mb-1">{['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => <span key={i} className="py-1">{d}</span>)}</div>
         <div className="grid grid-cols-7 gap-1">
@@ -79,7 +79,7 @@ export default function BookingPanel({ slug, title, price, minPeople = 1, maxPeo
             const sel = date === k;
             return (
               <button key={i} type="button" disabled={!open} onClick={() => setDate(k)}
-                className={`aspect-square text-sm flex flex-col items-center justify-center transition ${sel ? 'bg-ink text-bone' : open ? 'hover:bg-sienna hover:text-bone border border-ink/10' : 'text-stone-300 line-through'}`}
+                className={`h-11 text-sm flex flex-col items-center justify-center transition ${sel ? 'bg-ink text-bone' : open ? 'hover:bg-sienna hover:text-bone border border-ink/10' : 'text-stone-300 line-through'}`}
                 aria-label={`${k}${x?.status === 'full' ? ' (full)' : ''}`}>
                 <span>{d.getDate()}</span>
                 {open && x?.price != null && <span className={`text-[9px] leading-none ${sel ? 'text-bone/70' : 'text-stone-500'}`}>${x.price}</span>}
@@ -99,7 +99,7 @@ export default function BookingPanel({ slug, title, price, minPeople = 1, maxPeo
         <div className="mt-4 text-sm">
           <div className="flex justify-between"><span>{guests} × ${unit.toLocaleString()}</span><span className="display text-2xl tracking-tightest">${estimate.toLocaleString()}</span></div>
           {chosen?.price != null && chosen.price !== price && <p className="text-xs text-stone-500 mt-1">Today's seat price. It steps up as the trip fills; your exact total is confirmed at checkout.</p>}
-          {left != null && left <= 6 && <p className="text-xs text-sienna-dark mt-1">Only {left} {left === 1 ? 'seat' : 'seats'} left on this date.</p>}
+          {left != null && left <= 6 && <p className="text-xs text-accent-strong mt-1">Only {left} {left === 1 ? 'seat' : 'seats'} left on this date.</p>}
           {tooMany && <p className="text-xs text-red-700 mt-1">That is more than the seats left on this date.</p>}
         </div>
       )}

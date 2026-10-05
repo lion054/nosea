@@ -6,6 +6,7 @@ import Gallery from '@/components/Gallery';
 import BookingPanel from '@/components/BookingPanel';
 import EnquiryForm from '@/components/EnquiryForm';
 import ListingCard from '@/components/ListingCard';
+import MobileBookBar from '@/components/MobileBookBar';
 import { SITE } from '@/lib/site';
 
 export async function detailMeta(slug, kind) {
@@ -23,18 +24,20 @@ export default async function Detail({ slug, kind }) {
   const ld = { '@context': 'https://schema.org', '@type': 'TouristTrip', name: t.title, description: t.tagline, image: t.photos[0], touristType: journey ? 'Multi-day safari' : 'Day experience',
     provider: { '@type': 'TravelAgency', name: SITE.name, url: SITE.url }, offers: { '@type': 'Offer', price: t.price, priceCurrency: 'USD', url: `${SITE.url}/${journey ? 'journeys' : 'experiences'}/${t.slug}` },
     ...(t.itinerary.length ? { itinerary: { '@type': 'ItemList', itemListElement: t.itinerary.map((d, i) => ({ '@type': 'ListItem', position: i + 1, name: d.title })) } } : {}) };
+  const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ name: 'Home', path: '/' }, { name: journey ? 'Journeys' : 'Experiences', path: journey ? '/journeys' : '/experiences' }, { name: t.title, path: `/${journey ? 'journeys' : 'experiences'}/${t.slug}` }].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${SITE.url}${c.path}` })) };
   const facts = [[Clock, t.duration], [Users, `${t.minPeople > 1 ? `${t.minPeople}–` : 'Up to '}${t.maxPeople} guests`], [MapPin, t.place], t.difficulty && [Mountain, t.difficulty], t.season && [CalendarDays, `Best: ${t.season}`]].filter(Boolean);
   return (
     <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-10 pb-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
-      <nav className="eyebrow text-stone-500 mb-6" aria-label="Breadcrumb"><Link href="/" className="hover:text-ink">Home</Link> / <Link href={journey ? '/journeys' : '/experiences'} className="hover:text-ink">{journey ? 'Journeys' : 'Experiences'}</Link></nav>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }} />
+      <nav className="eyebrow text-stone-500 mb-2" aria-label="Breadcrumb"><Link href="/" className="hover:text-ink inline-block py-3">Home</Link> / <Link href={journey ? '/journeys' : '/experiences'} className="hover:text-ink inline-block py-3">{journey ? 'Journeys' : 'Experiences'}</Link></nav>
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
         <div className="lg:col-span-8">
-          <p className="eyebrow text-sienna-dark mb-3">{journey ? `${t.days}-day journey` : t.category}</p>
+          <p className="eyebrow text-accent-strong mb-3">{journey ? `${t.days}-day journey` : t.category}</p>
           <h1 className="display text-5xl md:text-7xl tracking-tightest leading-[0.98] mb-5">{t.title}</h1>
           {t.tagline && <p className="text-xl text-stone-600 leading-relaxed mb-8 max-w-2xl">{t.tagline}</p>}
           <Gallery photos={t.photos} title={t.title} stock={t.stockPhoto} />
-          <div className="flex flex-wrap gap-x-8 gap-y-3 my-8 py-5 border-y border-ink/15">{facts.map(([Icon, label], i) => <span key={i} className="flex items-center gap-2 text-sm"><Icon size={16} strokeWidth={1.5} className="text-sienna" /> {label}</span>)}</div>
+          <div className="flex flex-wrap gap-x-8 gap-y-3 my-8 py-5 border-y border-ink/15">{facts.map(([Icon, label], i) => <span key={i} className="flex items-center gap-2 text-sm"><Icon size={16} strokeWidth={1.5} className="text-accent" /> {label}</span>)}</div>
 
           {t.bodyHtml && <div className="prose-nosea" dangerouslySetInnerHTML={{ __html: t.bodyHtml }} />}
 
@@ -70,8 +73,10 @@ export default async function Detail({ slug, kind }) {
           <section className="mt-16 border border-ink/15 bg-paper p-8"><h2 className="display text-3xl tracking-tightest mb-2">Questions, or want it your way?</h2><p className="text-stone-600 mb-6 text-sm">Ask about dates, add a night, or change the pace. A planner replies by email.</p><EnquiryForm interest={t.title} compact /></section>
         </div>
 
-        <aside className="lg:col-span-4"><div className="lg:sticky lg:top-28"><BookingPanel slug={t.slug} title={t.title} price={t.price} minPeople={t.minPeople} maxPeople={t.maxPeople} journey={journey} /></div></aside>
+        <aside id="book" className="lg:col-span-4 scroll-mt-24"><div className="lg:sticky lg:top-28"><BookingPanel slug={t.slug} title={t.title} price={t.price} minPeople={t.minPeople} maxPeople={t.maxPeople} journey={journey} /></div></aside>
       </div>
+
+      <MobileBookBar price={t.price} label={journey ? 'Reserve a date' : 'Check dates'} />
 
       {related.length > 0 && (<section className="mt-24"><h2 className="display text-4xl tracking-tightest mb-8">You might also like</h2><div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">{related.map((r) => <ListingCard key={r.slug} t={r} />)}</div></section>)}
     </div>

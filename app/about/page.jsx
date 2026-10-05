@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import Img from '@/components/Img';
 import { STOCK } from '@/lib/images';
-export const metadata = { title: 'About', description: 'Nosea Safaris is a Harare-based travel company running day experiences and multi-day journeys across Zimbabwe and Southern Africa.' };
+export const metadata = { alternates: { canonical: '/about' }, title: 'About', description: 'Nosea Safaris is a Harare-based travel company running day experiences and multi-day journeys across Zimbabwe and Southern Africa.' };
 export default function Page() {
   return (
     <>
       <section className="max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-16 grid md:grid-cols-12 gap-12 items-end">
-        <div className="md:col-span-7"><p className="eyebrow mb-4">About</p><h1 className="display text-5xl md:text-8xl tracking-tightest leading-[0.95]">Rooted in <em className="text-sienna" style={{ fontStyle: 'italic' }}>Harare.</em></h1></div>
+        <div className="md:col-span-7"><p className="eyebrow mb-4">About</p><h1 className="display text-5xl md:text-8xl tracking-tightest leading-[0.95]">Rooted in <em className="text-accent" style={{ fontStyle: 'italic' }}>Harare.</em></h1></div>
         <p className="md:col-span-5 text-stone-600 leading-relaxed text-lg">Nosea Safaris plans day experiences and multi-day journeys across Zimbabwe and Southern Africa. Our name and our mark, the sable at the sun, come from the country we work in.</p>
       </section>
       <div className="relative h-[50vh] overflow-hidden"><Img src={STOCK.elephant} alt="" sizes="100vw" className="object-cover" /></div>

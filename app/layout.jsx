@@ -3,7 +3,7 @@ import { Fraunces, Instrument_Sans, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import Concierge from '@/components/Concierge';
+import ConciergeLazy from '@/components/ConciergeLazy';
 import { SITE } from '@/lib/site';
 
 // Self-hosted, subset, swap: no render-blocking request to a font CDN.
@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
         <Nav links={LINKS} />
         <main id="main" className="flex-1">{children}</main>
         <Footer links={LINKS} />
-        <Concierge />
+        <ConciergeLazy />
         {process.env.NEXT_PUBLIC_GA_ID && <><Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} strategy="lazyOnload" /><Script id="ga" strategy="lazyOnload">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${process.env.NEXT_PUBLIC_GA_ID}',{anonymize_ip:true});`}</Script></>}
       </body>
     </html>

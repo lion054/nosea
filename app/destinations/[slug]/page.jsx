@@ -11,7 +11,7 @@ export async function generateStaticParams() { return DESTINATIONS.map((d) => ({
 export async function generateMetadata(props) {
   const params = await props.params;
   const d = DESTINATIONS.find((x) => x.slug === params.slug);
-  return d ? { title: d.name, description: `${d.blurb} Best time to go: ${seasonLabel(d)}.` } : {};
+  return d ? { title: `${d.name} travel guide`, description: `${d.blurb} Best time to go: ${seasonLabel(d)}.`, alternates: { canonical: `/destinations/${d.slug}` } } : {};
 }
 
 export default async function Page(props) {
@@ -27,7 +27,7 @@ export default async function Page(props) {
         <Img src={d.photo} alt={d.name} sizes="100vw" priority className="object-cover opacity-90" />
         <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/30 to-transparent" />
         <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 h-full flex flex-col justify-end pb-12 text-bone">
-          <nav className="eyebrow text-bone/70 mb-4"><Link href="/destinations" className="hover:text-bone">Destinations</Link> / {d.country}</nav>
+          <nav className="eyebrow text-bone/70 mb-4"><Link href="/destinations" className="hover:text-bone inline-block py-3">Destinations</Link> / {d.country}</nav>
           <h1 className="display text-6xl md:text-9xl tracking-tightest leading-[0.9]">{d.name}</h1>
           <p className="text-xl text-bone/85 mt-4 max-w-xl">{d.tag}</p>
         </div>

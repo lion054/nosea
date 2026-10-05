@@ -34,7 +34,7 @@ export default function PayPanel({ p }) {
 
   if (sent) return (
     <div className="max-w-xl mx-auto px-6 py-24 text-center">
-      <Check size={44} strokeWidth={1.3} className="text-sienna mx-auto mb-6" />
+      <Check size={44} strokeWidth={1.3} className="text-accent mx-auto mb-6" />
       <h1 className="display text-5xl tracking-tightest mb-4">Thank you.</h1>
       <p className="text-stone-600 leading-relaxed mb-2">We have your transfer details. Your booking <strong>{p.invoice_number}</strong> is confirmed as soon as the money reaches our account, and we will email you.</p>
       <p className="text-stone-600">Questions? <a className="underline" href={waLink(`Hello Nosea Safaris, I sent a transfer for ${p.invoice_number}.`)}>WhatsApp us</a>.</p>
@@ -43,7 +43,7 @@ export default function PayPanel({ p }) {
 
   return (
     <div className="max-w-[1100px] mx-auto px-6 md:px-10 pt-14 pb-20 grid md:grid-cols-12 gap-12">
-      <div className="md:col-span-7 space-y-8">
+      <div className="md:col-span-7 space-y-8 order-last md:order-first">
         <div><p className="eyebrow mb-3">Step 2 of 2 · Payment</p><h1 className="display text-5xl tracking-tightest leading-none">Pay for your trip.</h1><p className="text-stone-600 mt-3">Your seats are held while you pay. Reference <strong>{p.invoice_number}</strong>.</p></div>
 
         {online.length > 0 && (
@@ -76,8 +76,8 @@ export default function PayPanel({ p }) {
         {error && <p className="text-sm text-red-700 border border-red-200 bg-red-50 p-3" role="alert">{error}</p>}
       </div>
 
-      <aside className="md:col-span-5">
-        <div className="border border-ink/15 bg-paper sticky top-28 p-6">
+      <aside className="md:col-span-5 order-first md:order-last">
+        <div className="border border-ink/15 bg-paper md:sticky md:top-28 p-6">
           <p className="eyebrow text-stone-500 mb-1">Your booking</p>
           <h2 className="display text-3xl tracking-tightest leading-tight mb-4">{p.service?.title || 'Your trip'}</h2>
           <dl className="text-sm space-y-2 border-t border-ink/10 pt-4">

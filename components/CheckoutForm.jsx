@@ -26,7 +26,7 @@ export default function CheckoutForm({ trip, date, adults, children }) {
 
   return (
     <div className="max-w-[1100px] mx-auto px-6 md:px-10 pt-14 pb-20 grid md:grid-cols-12 gap-12">
-      <form onSubmit={submit} className="md:col-span-7 space-y-6">
+      <form onSubmit={submit} className="md:col-span-7 space-y-6 order-last md:order-first">
         <div><p className="eyebrow mb-3">Your details</p><h1 className="display text-5xl tracking-tightest leading-none">Almost there.</h1></div>
         <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
         <div className="grid sm:grid-cols-2 gap-5"><input required name="firstName" placeholder="First name" className={field} autoComplete="given-name" /><input required name="lastName" placeholder="Last name" className={field} autoComplete="family-name" /></div>
@@ -36,8 +36,8 @@ export default function CheckoutForm({ trip, date, adults, children }) {
         <button disabled={busy} className="w-full bg-ink text-bone py-5 eyebrow hover:bg-sienna transition disabled:opacity-50 flex items-center justify-center gap-2"><Lock size={14} /> {busy ? 'Reserving your seats…' : 'Continue to payment'}</button>
         <p className="text-xs text-stone-500">Your seats are held while you pay on the next step. We never see or store your card details.</p>
       </form>
-      <aside className="md:col-span-5">
-        <div className="border border-ink/15 bg-paper sticky top-28">
+      <aside className="md:col-span-5 order-first md:order-last">
+        <div className="border border-ink/15 bg-paper md:sticky md:top-28">
           <div className="relative aspect-16/9 overflow-hidden"><Img src={trip.photo} alt="" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /></div>
           <div className="p-6">
             <p className="eyebrow text-stone-500 mb-1">{trip.place} · {trip.duration}</p>

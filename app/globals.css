@@ -13,6 +13,9 @@
   --color-stone-600: #3A3A3A;
   --color-sienna: #F46F30;
   --color-sienna-dark: #D4531A;
+  /* Text-safe oranges (AA contrast on white): accent for large display text, accent-strong for small text. */
+  --color-accent: #E0541A;
+  --color-accent-strong: #BE4510;
   --color-sienna-light: #FF8A55;
   --color-miombo: #1F3A2A;
   --color-miombo-dark: #132419;
@@ -65,8 +68,8 @@ body { font-feature-settings: 'ss01', 'ss02'; }
 
 .eyebrow {
   font-family: var(--nf-mono), ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-size: 12px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -143,3 +146,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* The logo's sun: coral to amber */
 .bg-sunset { background-image: linear-gradient(135deg, #FF6A4D 0%, #F58A2A 100%); }
+
+/* Phones: no zoom-on-focus, quick taps, safe areas, calmer motion */
+@media (max-width: 767px) {
+  input, select, textarea { font-size: 16px !important; }
+}
+a, button, summary, [role='button'] { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise, .marquee { animation: none !important; }
+  .card-img, .link-underline { transition: none !important; }
+}
