@@ -12,11 +12,12 @@ const securityHeaders = [
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  experimental: { inlineCss: true },
   compress: true,
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60 * 60 * 24 * 30,
-    qualities: [60, 70, 72, 75],
+    qualities: [55, 60, 65, 70, 75],
     // The local portal runs on 127.0.0.1; Next 16 refuses to optimise images from a local address unless told to.
     dangerouslyAllowLocalIP: isDev,
     deviceSizes: [360, 480, 640, 768, 1024, 1280, 1600, 1920],
