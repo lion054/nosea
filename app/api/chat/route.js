@@ -35,6 +35,40 @@ function contentExtractor() {
 const clean = (h = '') => h.replace(/<a\b[^>]*>(.*?)<\/a>/gi, '$1').replace(/(<br\s*\/?>\s*){3,}/gi, '<br><br>').replace(/(<br\s*\/?>\s*)+$/gi, '').trim();
 const safeLinks = (l, ok) => (Array.isArray(l) ? l : []).filter((x) => x?.label && typeof x.url === 'string' && x.url.startsWith('/') && (!ok || ok.has(x.url.split('?')[0]))).slice(0, 3);
 
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
+
+/** The number of travellers and the start date the guest gave, if they gave them. */
+function intake(messages) {
+  const text = messages.filter((m) => m.role === 'user').map((m) => String(m.content)).join(' . ').toLowerCase();
+  const out = {};
+  const g = /(\d{1,2}|one|two|three|four|five|six|seven|eight)\s*(?:adults?|people|persons?|guests?|travell?ers?|pax|of us)/.exec(text) || /(?:for|party of|group of)\s+(\d{1,2}|two|three|four|five|six)\b/.exec(text);
+  if (g) out.guests = Number(g[1]) || WORDS[g[1]];
+  else if (/\b(couple|honeymoon|my wife|my husband|my partner)\b/.test(text)) out.guests = 2;
+  else if (/\b(solo|alone|just me|by myself)\b/.test(text)) out.guests = 1;
+  const today = new Date().toISOString().slice(0, 10);
+  const iso = /\b(\d{4}-\d{2}-\d{2})\b/.exec(text)?.[1];
+  const dm = /\b(\d{1,2})(?:st|nd|rd|th)?\s+(?:of\s+)?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s*(\d{4})?/.exec(text);
+  const md = /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s*(\d{4}))?\b/.exec(text);
+  let d = iso;
+  if (!d && dm) d = `${dm[3] || new Date().getFullYear()}-${String(MONTHS.indexOf(dm[2]) + 1).padStart(2, '0')}-${dm[1].padStart(2, '0')}`;
+  if (!d && md) d = `${md[3] || new Date().getFullYear()}-${String(MONTHS.indexOf(md[1]) + 1).padStart(2, '0')}-${md[2].padStart(2, '0')}`;
+  if (d && d < today && !iso && !(dm?.[3] || md?.[3])) d = d.replace(/^\d{4}/, String(new Date().getFullYear() + 1));
+  if (d && d >= today) out.date = d;
+  return out;
+}
+
+/** The Book button: the first real trip the reply points to, opened on checkout with what the guest has told us. */
+function withBookLink(links, paths, messages) {
+  const trip = (links || []).map((l) => /^\/(?:journeys|experiences)\/([^/?#]+)$/.exec(l?.url || '')).find((m) => m && paths.has(m[0]));
+  if (!trip) return links;
+  const { guests, date } = intake(messages);
+  const q = new URLSearchParams({ slug: trip[1] });
+  if (date) q.set('date', date);
+  if (guests) q.set('adults', String(guests));
+  return [{ label: 'Book this trip →', url: `/checkout?${q}`, type: 'book' }, ...links].slice(0, 4);
+}
+
 export async function POST(req) {
   if (limited(`chat:${ipOf(req)}`, 20, 60 * 1000)) return new Response(JSON.stringify({ error: 'Too many messages. Please wait a moment.' }), { status: 429 });
   let body;
@@ -48,7 +82,7 @@ export async function POST(req) {
     async start(ctrl) {
       const send = (o) => ctrl.enqueue(enc.encode(`data: ${JSON.stringify(o)}\n\n`));
       const paths = await knownPaths();
-      const finish = (r) => send({ done: true, finalContent: clean(r.content), pageLinks: safeLinks(r.page_links, paths), followUps: (r.suggested_follow_ups || []).slice(0, 3), needsHuman: !!r.needs_human, humanSubject: r.human_subject || null });
+      const finish = (r) => send({ done: true, finalContent: clean(r.content), pageLinks: withBookLink(safeLinks(r.page_links, paths), paths, messages), followUps: (r.suggested_follow_ups || []).slice(0, 3), needsHuman: !!r.needs_human, humanSubject: r.human_subject || null });
       let ok = false;
 
       if (process.env.ANTHROPIC_API_KEY) {
